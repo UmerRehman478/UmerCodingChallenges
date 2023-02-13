@@ -26,7 +26,7 @@ public class GradeCalculatorController {
     	double courseGrade = 0.0;
     	
     	String projectGrade = projectGradeTextfield.getText();
-    	courseGrade = courseGrade + Double.parseDouble(projectGrade) * 50 / 100;
+    	courseGrade = courseGrade + Double.parseDouble(projectGrade) * 40 / 100;
     	System.out.println("Project grade entered: " + projectGrade + 
     			" Course grade so far: " + courseGrade);
     	
@@ -37,7 +37,7 @@ public class GradeCalculatorController {
     			" Course grade so far: " + courseGrade);
     	
     	int codingChallengesPassed = codingChallengesPassedChoiceBox.getValue();
-    	courseGrade += (codingChallengesPassed * 1.25);
+    	courseGrade += (codingChallengesPassed * 1.03);
     	System.out.println("Coding challenges passed: " + codingChallengesPassed + 
     			" Course grade so far: " + courseGrade);
     	int optionalcodingChallengesPassed = optionalCodingChallengesPassedChoiceBox.getValue();
