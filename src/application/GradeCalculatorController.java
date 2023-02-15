@@ -78,16 +78,13 @@ public class GradeCalculatorController {
     	projectGradeErrorLabel.setText("");
     	double courseGrade = 0.0;
     	
-<<<<<<< HEAD
+
     	String projectValueEntered = projectGradeTextfield.getText();
     	
     	// Check if user entered a percentage grade. IF not, display error message
     	double projectGrade  = getProjectGrade(projectValueEntered);
     	courseGrade = courseGrade + projectGrade * 50 / 100;
-=======
-    	String projectGrade = projectGradeTextfield.getText();
-    	courseGrade = courseGrade + Double.parseDouble(projectGrade) * 40 / 100;
->>>>>>> branch 'Validating_User_Input' of https://github.com/UmerRehman478/UmerCodingChallenges.git
+
     	System.out.println("Project grade entered: " + projectGrade + 
     			" Course grade so far: " + courseGrade);
     	
