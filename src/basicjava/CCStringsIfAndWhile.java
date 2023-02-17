@@ -11,7 +11,8 @@ public class CCStringsIfAndWhile {
 		// TODO Auto-generated method stub
 		int count = 0;
 		for(int i = 0; i < string.length(); i++) {
-			if(string.charAt(i) == chars.charAt(-1)) {
+			char c = string.charAt(i);
+			if(chars.indexOf(c) != -1) {
 				count++;
 			}
 		}
