@@ -4,7 +4,7 @@ public class CCStringsIfAndWhile {
 
 	public static boolean isDigit(char c) {
 		// TODO Auto-generated method stub
-		return false;
+		return Character.isDigit(c);
 	}
 
 	public static int count(String string, String string2) {
