@@ -2,12 +2,12 @@ package basicjava;
 
 public class CCStringsIfAndWhile {
 
-	public static boolean isDigit(char c) {
+	public static boolean isDigit(char aChar) {
 		// TODO Auto-generated method stub
-		return Character.isDigit(c);
+		return Character.isDigit(aChar);
 	}
 
-	public static int count(String string, String string2) {
+	public static int count(String string, String chars) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
