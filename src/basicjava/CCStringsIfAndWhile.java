@@ -9,7 +9,13 @@ public class CCStringsIfAndWhile {
 
 	public static int count(String string, String chars) {
 		// TODO Auto-generated method stub
-		return 0;
+		int count = 0;
+		for(int i = 0; i < string.length(); i++) {
+			if(string.charAt(i) == chars.charAt(-1)) {
+				count++;
+			}
+		}
+		return count;
 	}
 
 	public static int smallestDigit(int i) {
