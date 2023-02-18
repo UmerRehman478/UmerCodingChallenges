@@ -16,10 +16,20 @@ public class CCStringsIfAndWhile {
 		return false;
 	}
 
-	public static int count(String string, String chars) {
+	public static int count(String str, String chars) {
 		// TODO Auto-generated method stub
-		
-		return 0;
+	    int count = 0;
+	    str = str.toLowerCase();
+	    chars = chars.toLowerCase();
+	    for (int i = 0; i < str.length(); i++) {
+	        char ch = str.charAt(i);
+	        for (int j = 0; j < chars.length(); j++) {
+	            if (ch == chars.charAt(j)) {
+	                count++;
+	            }
+	        }
+	    } 
+	    return count;
 	}
 
 	public static int smallestDigit(int num) {
