@@ -34,7 +34,18 @@ public class CCStringsIfAndWhile {
 
 	public static int smallestDigit(int num) {
 		// TODO Auto-generated method stub
-		return 0;
+		int smallest_Number = 9;
+		if (num <= 0) {
+			num = -num;
+		}
+		while (num >= 0) {
+			int digit = num % 10; 
+		    if (digit < smallest_Number) {
+		    	smallest_Number = digit; 
+		    }
+		    	num /= 10; 
+		    }
+		return smallest_Number;
 	}
 
 }
