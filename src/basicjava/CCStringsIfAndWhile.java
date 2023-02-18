@@ -4,22 +4,25 @@ public class CCStringsIfAndWhile {
 
 	public static boolean isDigit(char aChar) {
 		// TODO Auto-generated method stub
-		return Character.isDigit(aChar);
+	    String digits = "0123456789";
+	    int i = 0;
+	    while (i < digits.length()) {
+	        if (aChar == digits.charAt(i)) {
+	            return true;
+	        }
+	        i++;
+	    }
+
+		return false;
 	}
 
 	public static int count(String string, String chars) {
 		// TODO Auto-generated method stub
-		int count = 0;
-		for(int i = 0; i < string.length(); i++) {
-			char c = string.charAt(i);
-			if(chars.indexOf(c) != -1) {
-				count++;
-			}
-		}
-		return count;
+		
+		return 0;
 	}
 
-	public static int smallestDigit(int i) {
+	public static int smallestDigit(int num) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
