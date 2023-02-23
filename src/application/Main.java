@@ -15,6 +15,8 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			VBox root = loader.load(new FileInputStream("src/application/GradeCalculatorView.fxml"));
+			GradeCalculatorController controller = (GradeCalculatorController)loader.getController();
+			controller.applicationStage = primaryStage;
 			Scene scene = new Scene(root,750,300);
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Umer Grade Calculator");
