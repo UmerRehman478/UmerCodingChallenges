@@ -1,6 +1,7 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,61 +43,32 @@ public class GradeCalculatorController {
     @FXML
     private Label projectGradeErrorLabel;
     
-    /**
-     * Checks if the value provided is a valid project grade. A project grade must be numeric and 
-     * a percentage (between 0 and 100). If valid, the equivalent double is returned, if not, this method returns zero.
-     *   
-     * @param valueEntered the value entered as the project grade 
-     * @return the double value of valueEntered if it is numeric and a valid percentage and 0 otherwise.
-     */
-    double getProjectGrade(String valueEntered) {
-    	// Check that the user entered a numeric value
-    	boolean validProjectGrade = true;
-    	boolean singalDecimalPoint = false;
-    	//For loop through each character in string 
-    	for (char c : valueEntered.toCharArray()) {
-    		// If any character is not a digit, set flag to false: it is not a number 
-    		if (!Character.isDigit(c)) {
-    			// Checking if the character is a digit or not
-    			if (c == '.' && !singalDecimalPoint && valueEntered.indexOf(c) == valueEntered.lastIndexOf(c)) {
-    				singalDecimalPoint = true;
-    			} else {
-    			validProjectGrade = false;
-    			projectGradeErrorLabel.setText("Dont include the character: " + c +
-    					". Project grade should be percentage. ");
-    		}
-    		}
-    	}
-    	/* Default project grade to 0. If valid number entered, convert user input to 
-    	 * floating point number.
-    	 */ 
-    	double projectGrade = 0;
-    	if (validProjectGrade) {
-    		projectGrade = Double.parseDouble(valueEntered);
-    	}
-    	
-    	// Check if projectGrade is a valid percentage grade. If not, reset to default grade of 0.
-    	if (projectGrade < 0 || projectGrade > 100) {
-    		projectGradeErrorLabel.setText("Project grade should be between 0% and 100%. Invalid project grade: " 
-    				+ projectGrade);
-    		projectGrade = 0;
-    	} 
-    	
-    	return projectGrade;
-    }
+    @FXML
+    private Label quizGradeErrorLabel;
     
+    @FXML
+    private Label optquizGradeErrorLabel;
+    
+
     void calculateQuizGrade(Scene mainScene, ArrayList<TextField> quizGradeTextfields) {
+    	quizGradeErrorLabel.setText("");
     	averageQuizGrade = 0.0;
+    	boolean noErrors = true;
+    	double weightOfEachQuiz = 1.0/15;
     	for (TextField textfield : quizGradeTextfields) {
-        	averageQuizGrade += Double.parseDouble(textfield.getText());
+    		Grade quizGrade = new Grade(0, 10, weightOfEachQuiz); 
+    		String errorMessage = quizGrade.setValue(textfield.getText());
+    		if (!errorMessage.equals("")) {
+    			noErrors = false;
+    			quizGradeErrorLabel.setText(errorMessage);
+    		}
+        	averageQuizGrade += quizGrade.getWeightedPercentageValue();
     	}
-
-    	averageQuizGrade = averageQuizGrade / 15;
-    	//requiredQuizGrade.setText(String.format("Average: %.2f/10", averageQuizGrade));
+    	if(noErrors) {
     	applicationStage.setScene(mainScene);
-    	requiredQuizGrade.setText(String.format("Average: %.2f/10", averageQuizGrade));
-
-
+    	requiredQuizGrade.setText(String.format("Average: %.2f%%", averageQuizGrade));
+    	}
+    	System.out.println(averageQuizGrade);
     }
     
     @FXML
@@ -124,24 +96,42 @@ public class GradeCalculatorController {
         doneButton.setOnAction(doneEvent -> calculateQuizGrade(mainScene, quizTextFields));
         allRows.getChildren().add(doneButton);
     	
+    	
+    	quizGradeErrorLabel = new Label();
+    	allRows.getChildren().add(quizGradeErrorLabel);
+        
     	Scene quizScene = new Scene(allRows);
     	applicationStage.setScene(quizScene);
     	
     }
     
-    
-    
     void calculateoptionalQuizGrade(Scene mainScene, ArrayList<TextField> optionalquizTextFields) {
+    	optquizGradeErrorLabel.setText("");
     	optionalaverageQuizGrade = 0.0;
+    	boolean noErrors = true;
+    	double weightOfEachoptQuiz = 1.0/5;
+    	
+        
+   
+
+    	
     	for (TextField textfield : optionalquizTextFields) {
-    		optionalaverageQuizGrade += Double.parseDouble(textfield.getText());
+    		Grade optionalquizGrade = new Grade(0, 10, weightOfEachoptQuiz); 
+    		String errorMessage = optionalquizGrade.setValue(textfield.getText());
+    		if (!errorMessage.equals("")) {
+    			noErrors = false;
+    			optquizGradeErrorLabel.setText(errorMessage);
+    		}
+    		optionalaverageQuizGrade += optionalquizGrade.getWeightedPercentageValue();
 
     	}
-    	
-    	optionalaverageQuizGrade = optionalaverageQuizGrade / 5;
-    	optionalQuizGrade.setText(String.format("Average: %.2f/10", optionalaverageQuizGrade));
+    	if(noErrors) {
+    	optionalQuizGrade.setText(String.format("Average: %.2f%%", optionalaverageQuizGrade));
     	applicationStage.setScene(mainScene);
+    	}
+    	System.out.println(optionalaverageQuizGrade);
     }
+    
     
     @FXML
     void getoptionalQuizGrades(ActionEvent enteroptionalQuizGradesEvent) {
@@ -167,6 +157,9 @@ public class GradeCalculatorController {
     	Button optionaldoneButton = new Button("Done");
     	optionaldoneButton.setOnAction(doneEvent -> calculateoptionalQuizGrade(mainScene, optionalquizTextFields));
         optionalquizGrade.getChildren().add(optionaldoneButton);
+        
+        optquizGradeErrorLabel = new Label();
+        optionalquizGrade.getChildren().add(optquizGradeErrorLabel);
     	
     	Scene quizScene = new Scene(optionalquizGrade);
     	applicationStage.setScene(quizScene);
@@ -182,29 +175,28 @@ public class GradeCalculatorController {
     	projectGradeErrorLabel.setText("");
     	double courseGrade = 0.0;
     	
-    	String projectValueEntered = projectGradeTextfield.getText();
+    	Grade projectGrade = new Grade(0, 100, .5);
+    	projectGradeErrorLabel.setText(projectGrade.setValue(projectGradeTextfield.getText()));
+    	
+    	Grade quizGrade = new Grade(averageQuizGrade, 100, .1875);
+    	
+    	Grade optionalquizGrade = new Grade(optionalaverageQuizGrade, 100, .0625);
+    	
+    	Grade codingChallengesPassed = new Grade(codingChallengesPassedChoiceBox.getValue(), 100, 1.25);
+    	
+    	Grade optionalcodingChallengesPassed = new Grade(optionalCodingChallengesPassedChoiceBox.getValue(), 100, 1.25);
+    	
     	
     	// Check if user entered a percentage grade. IF not, display error message
-    	double projectGrade  = getProjectGrade(projectValueEntered);
-    	courseGrade = courseGrade + projectGrade * 50 / 100;
-    	System.out.println("Project grade entered: " + projectGrade + 
-    			" Course grade so far: " + courseGrade);
+    	//double projectGrade  = getProjectGrade(projectValueEntered);
+    	courseGrade = projectGrade.getWeightedPercentageValue() +
+    			quizGrade.getWeightedPercentageValue() +
+    			optionalquizGrade.getWeightedPercentageValue() +
+    			codingChallengesPassed.getWeightedPercentageValue() +
+    			optionalcodingChallengesPassed.getWeightedPercentageValue();
     	
-    	double quizGrade = (((averageQuizGrade)*10)*0.1875);
-    	double optionalquizGrade = (((optionalaverageQuizGrade)*10)*0.0625);
-    	courseGrade = courseGrade + (((quizGrade)+(optionalquizGrade)));
-    	System.out.println("Quiz grade: " + courseGrade);
-    	
-    	
-    	int codingChallengesPassed = codingChallengesPassedChoiceBox.getValue();
-    	courseGrade += (codingChallengesPassed * 1.25);
-    	System.out.println("Coding challenges passed: " + codingChallengesPassed + 
-    			" Course grade so far: " + courseGrade);
-    	int optionalcodingChallengesPassed = optionalCodingChallengesPassedChoiceBox.getValue();
-    	courseGrade += (optionalcodingChallengesPassed * 1.25);
-    	System.out.println("Optional coding challenges passed: " + optionalcodingChallengesPassed + 
-    			" Course grade so far: " + courseGrade);
-    	
+    	// Display result of calculation to the user in the window 
+    	//Display result to two digits after decimal point
     	courseGradeLabel.setText(String.format("Your overall course grade is: %.2f", courseGrade));
     	
 
