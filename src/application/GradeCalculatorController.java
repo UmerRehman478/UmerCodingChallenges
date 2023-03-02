@@ -1,7 +1,7 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Arrays;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -111,27 +111,44 @@ public class GradeCalculatorController {
     	boolean noErrors = true;
     	double weightOfEachoptQuiz = 1.0/5;
     	
-        
-   
+    	Double[] arrayTexts = new Double[7];
+    	Arrays.fill(arrayTexts, 0.0);
+    	int i = 0;
+                
+        for (TextField textfield : optionalquizTextFields) {
+            Grade optionalquizGrade = new Grade(0, 10, weightOfEachoptQuiz); 
+            String errorMessage = optionalquizGrade.setValue(textfield.getText());
+            if (!errorMessage.equals("")) {
+                noErrors = false;
+                optquizGradeErrorLabel.setText(errorMessage);
+            } 
+            arrayTexts[i] = Double.parseDouble(textfield.getText());
+            i++;            
+        }
 
-    	
-    	for (TextField textfield : optionalquizTextFields) {
-    		Grade optionalquizGrade = new Grade(0, 10, weightOfEachoptQuiz); 
-    		String errorMessage = optionalquizGrade.setValue(textfield.getText());
-    		if (!errorMessage.equals("")) {
-    			noErrors = false;
-    			optquizGradeErrorLabel.setText(errorMessage);
-    		}
-    		optionalaverageQuizGrade += optionalquizGrade.getWeightedPercentageValue();
+        if(noErrors) {
+        	Arrays.sort(arrayTexts);   
+        	for (int j = 6; j > 1; j--) {
+        		optionalaverageQuizGrade += arrayTexts[j] * 10;
 
-    	}
-    	if(noErrors) {
-    	optionalQuizGrade.setText(String.format("Average: %.2f%%", optionalaverageQuizGrade));
-    	applicationStage.setScene(mainScene);
-    	}
-    	System.out.println(optionalaverageQuizGrade);
+            //Remove the two lowest grades
+            if (optionalquizTextFields.size() == 6) {
+            	optionalquizTextFields.remove(0);
+            } 
+            
+            if (optionalquizTextFields.size() == 7) {
+            	optionalquizTextFields.remove(0);
+            	optionalquizTextFields.remove(1);
+            }
+            
+        	}
+            optionalaverageQuizGrade = optionalaverageQuizGrade / (5);
+            
+            optionalQuizGrade.setText(String.format("Average: %.2f%%", optionalaverageQuizGrade));
+            applicationStage.setScene(mainScene);
+        }
+        System.out.println(optionalaverageQuizGrade);
     }
-    
     
     @FXML
     void getoptionalQuizGrades(ActionEvent enteroptionalQuizGradesEvent) {
