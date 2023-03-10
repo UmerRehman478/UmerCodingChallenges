@@ -1,42 +1,23 @@
 package oosequence;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Date;
-
-import org.junit.Test;
 
 public class Flight {
 
-	Date departure;
-	Date arrival;
+	public Object departure;
+	public Object arrival;
 
-	Flight(Date departuredate, Date arrivaldate2) {
-		if (departuredate == null || arrivaldate2 == null) {
-			departure = departuredate;
-			arrival = arrivaldate2;
-		} else if (departuredate.before(arrivaldate2)) {
-			departure = departuredate;
-			arrival = arrivaldate2;
-		} else {
-			departure = null;
-			arrival = null;
-		}
-	}
-	
-
-	Flight(Flight c) {
-		departure = c.departure;
-	    arrival = c.arrival;
+	public Flight(Date date, Date date2) {
+		// TODO Auto-generated constructor stub
 	}
 
-	Object length() {
-		long Minutes = 0;
-		if (departure != null && arrival != null) {
-	    	long Millis = arrival.getTime() - departure.getTime();
-	    	Minutes = Millis / (60 * 1000);
-	    }
-        return Minutes;
+	public Flight(Flight c) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Object length() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
