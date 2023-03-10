@@ -11,7 +11,7 @@ public class Flight {
 	Date departure;
 	Date arrival;
 
-	Flight(Date departuredate, Date arrivaldate2) {
+	public Flight(Date departuredate, Date arrivaldate2) {
 		if (departuredate == null || arrivaldate2 == null) {
 			departure = departuredate;
 			arrival = arrivaldate2;
@@ -25,12 +25,12 @@ public class Flight {
 	}
 	
 
-	Flight(Flight c) {
+	public Flight(Flight c) {
 		departure = c.departure;
 	    arrival = c.arrival;
 	}
 
-	Object length() {
+	public long length() {
 		long Minutes = 0;
 		if (departure != null && arrival != null) {
 	    	long Millis = arrival.getTime() - departure.getTime();
