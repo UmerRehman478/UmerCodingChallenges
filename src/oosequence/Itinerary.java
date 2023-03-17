@@ -1,35 +1,56 @@
 package oosequence;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Itinerary {
 	private ArrayList<Flight> flights;
 	private String name;
 
 	public Itinerary(String string) {
-		// TODO Auto-generated constructor stub
+		name = string;
+		flights = new ArrayList<>();
 	}
 
 	public String getName() {
-		// TODO Auto-generated method stub
 		return name;
 	}
 
 	public void addFlight(Flight m) {
-		// TODO Auto-generated method stub
-		
+		flights.add(m);
+	    
+	    Collections.sort(flights, new Comparator<Flight>() {
+	        public int compare(Flight f1, Flight f2) {
+	            return f1.getDeparture().compareTo(f2.getDeparture());
+	        }
+	    });
+	    
+	    int i = 0;
+	    while (i < flights.size() - 1) {
+	        Flight currentFlight = flights.get(i);
+	        Flight nextFlight = flights.get(i + 1);
+	        if (currentFlight.getArrival().after(nextFlight.getDeparture())) {
+	            flights.remove(i + 1);
+	        } else {
+	            i++;
+	        }
+	    }	
 	}
 
 	public ArrayList<Flight> getFlights() {
-		// TODO Auto-generated method stub
 		return flights;
 	}
 
 	public long getTotalLayover() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	
-
+		long getTotalLayover = 0;
+        
+        for (int i = 0; i < flights.size() - 1; i++) {
+            Flight waitTime = flights.get(i);
+            Flight nextFlight = flights.get(i + 1);
+            long layover = nextFlight.getDeparture().getTime() - waitTime.getArrival().getTime();
+            getTotalLayover += layover / (60 * 1000); 
+        }
+        return getTotalLayover;
+    }
 }

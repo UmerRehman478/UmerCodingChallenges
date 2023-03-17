@@ -12,7 +12,7 @@ public class Flight {
 	private Date arrival;
 
 	public Flight(Date departuredate, Date arrivaldate) {
-		if (departuredate == null && arrivaldate == null) {
+		if (departuredate == null || arrivaldate == null) {
 			departure = departuredate;
 			arrival = arrivaldate;
 		} else if (departuredate.before(arrivaldate)) {
@@ -51,14 +51,14 @@ public class Flight {
 
 
 	public void setDeparture(Date date) {
-		if (date != null && arrival != null && date.before(arrival)) {
+		if (date != null && (arrival == null || date.before(arrival))) {
 		departure = date;
 		}
 	}
 
 
 	public void setArrival(Date date) {
-		if (date != null && departure != null && date.after(departure)) {
+		if (date != null && (departure == null || date.after(departure))) {
 		arrival = date;
 		}
 	}
