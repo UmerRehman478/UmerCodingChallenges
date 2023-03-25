@@ -1,66 +1,54 @@
 package oosequence;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Date;
-
-import org.junit.Test;
 
 public class Flight {
 
-	private Date departure;
-	private Date arrival;
-
-	public Flight(Date departuredate, Date arrivaldate) {
-		if (departuredate == null || arrivaldate == null) {
-			departure = departuredate;
-			arrival = arrivaldate;
-		} else if (departuredate.before(arrivaldate)) {
-			departure = departuredate;
-			arrival = arrivaldate;
-		} else {
-			departure = null;
-			arrival = null;
-		}
+	private String departureAirport;
+	private String arrivalAirport;
+	private Date start;
+	private Date end;
+	
+	public String getDepartureAirport() {
+		return departureAirport;
 	}
 	
-
-	public Flight(Flight c) {
-		departure = c.departure;
-	    arrival = c.arrival;
-	}
-
-	public long length() {
-		long Minutes = 0;
-		if (departure != null && arrival != null) {
-	    	long Millis = arrival.getTime() - departure.getTime();
-	    	Minutes = Millis / (60 * 1000);
+	public void setDepartureAirport(String departureAirport) {
+		if (departureAirport != null && departureAirport.length() == 3) {
+			this.departureAirport = departureAirport;
+	    } else {
+	    	this.departureAirport = "";
 	    }
-        return Minutes;
 	}
-
-
-	public Date getDeparture() {
-		return departure;
+	
+	public String getArrivalAirport() {
+		return arrivalAirport;
 	}
-
-
-	public Date getArrival() {
-		return arrival;
+	
+	public void setArrivalAirport(String arrivalAirport) {
+		if (arrivalAirport != null && arrivalAirport.length() == 3) {
+			this.arrivalAirport = arrivalAirport;
+		} else {
+			this.arrivalAirport = "";
+		}	
 	}
-
-
-	public void setDeparture(Date date) {
-		if (date != null && (arrival == null || date.before(arrival))) {
-		departure = date;
+	
+	public void setStart(Date start) {
+		this.start = start;
+	}
+	
+	public void setEnd(Date end) {
+		this.end = end;
+	}
+	
+	public String getDuration() {
+		// TODO: calculate and return duration between start and end
+		if (start == null || end == null) {
+			return "";
 		}
-	}
-
-
-	public void setArrival(Date date) {
-		if (date != null && (departure == null || date.after(departure))) {
-		arrival = date;
-		}
+		long milliseconds = end.getTime() - start.getTime();
+		long minutes = milliseconds / (60 * 1000);
+		return minutes + " minutes";
 	}
 
 }
