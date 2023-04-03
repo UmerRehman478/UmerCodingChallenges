@@ -1,74 +1,110 @@
 package oosequence;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Date;
 
-import org.junit.Test;
+public class TripComponent{
+    private Date start;
+    private Date end;
 
-public class TripComponent {
+    public TripComponent(Date startdate, Date enddate) {
+        if (startdate == null || enddate == null) {
+            start = startdate;
+            end = enddate;
+        } else if (startdate.equals(enddate)) {
+            start = startdate;
+            end = null;
+        } else if (startdate.after(enddate)) {
+            start = startdate;
+            end = null;
+        } else {
+            start = startdate;
+            end = enddate;
+        }
+    }
 
-	private Date start;
-	private Date end;
-	
-	public TripComponent(Date startdate, Date enddate) {
-		if (startdate == null || enddate == null) {
-			start = startdate;
-			end = enddate;
-		} else if (startdate.equals(enddate)) {
-			start = startdate;
-			end = null;
-		} else if (startdate.after(enddate)) {
-			start = startdate;
-			end = null;
-		} else {
-			start = startdate;
-			end = enddate;
-		}
+    public TripComponent(TripComponent c) {
+        if (c.start != null) {
+            start = new Date(c.start.getTime());
+        } else {
+            start = null;
+        }
+        
+        if (c.end != null) {
+            end = new Date(c.end.getTime());
+        } else {
+            end = null;
+        }
+    }
+
+    public TripComponent() {
+        start = new Date();
+        end = new Date(start.getTime());
+    }
+
+    public long lengthInSeconds() {
+        if (start == null || end == null) {
+            return 0;
+        }
+        long millis = end.getTime() - start.getTime();
+        return millis / 1000;
+    }
+
+    public String getStart() {
+        if (start != null) {
+            return start.toString();
+        } else {
+            return "";
+        }     
+    }
+
+    public String getEnd() {
+        if (end != null) {
+            return end.toString();
+        } else {
+            return "";
+        }
+    }
+
+    public void setStart(Date startdate) {
+    	if (startdate == null) {
+    		return;
+    	}
+    	if (end != null && startdate.after(end)) {
+    		return;
+    	}
+    	start = new Date(startdate.getTime());
+    }
+
+    public void setEnd(Date enddate) {
+        if (enddate == null) {
+            return;
+        }
+        if (start != null && enddate.before(start)) {
+            return;
+        }
+        end = new Date(enddate.getTime()); 
+    }
+
+    public boolean overlapsWith(TripComponent other) {
+        if (other == null || start == null || end == null || other.start == null || other.end == null) {
+            return false;
+        } else {
+            return !(start.after(other.end) || end.before(other.start));
+        }
+    }
+
+	public boolean isBefore(Object object) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
-
-	public TripComponent(TripComponent c) {
-		start = c.start;
-		end = c.end;
+	public static int size() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
-
-	public TripComponent() {
-		// TODO Auto-generated constructor stub
-		start = new Date();
-		end = new Date(start.getTime() + (60 * 60 * 1000));
-	}
-
-
-	public long lengthInSeconds() {
-		long seconds = 0;
-		if (start != null && end != null) {
-			long millis = end.getTime() - start.getTime();
-			seconds = millis / 1000;
-		}
-		return seconds;
-	}
-
-	public Date getStart() {
-		return start;
-	}
-
-
-	public Date getEnd() {
-		return end;
-	}
-
-
-	public void setStart(Date startdate) {
-		if (startdate != null && (end == null || startdate.before(end))) {
-			start = startdate;
-		}
-	}
-
-
-	public void setEnd(Date enddate) {
-		if (enddate != null && (start == null || enddate.after(start))) {
-			end = enddate;
-		}
+	
+	public static void add(TripComponent h) {
+		// TODO Auto-generated method stub
+		
 	}
 }

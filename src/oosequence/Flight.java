@@ -2,15 +2,36 @@ package oosequence;
 
 import java.util.Date;
 
-public class Flight {
+public class Flight extends TripComponent {
 
 	private String departureAirport;
 	private String arrivalAirport;
-	private Date start;
-	private Date end;
+	public Date start;
+	public Date end;
+	
+	public Flight(Date date, Date date2, String string, String string2) {
+		// TODO Auto-generated constructor stub
+		start = date;
+		end = date2;
+		setDepartureAirport(string);
+        setArrivalAirport(string2);
+	}
+
+	public Flight(Flight c) {
+		// TODO Auto-generated constructor stub
+		start = c.start;
+		end = c.end;
+		setDepartureAirport(c.departureAirport);
+        setArrivalAirport(c.arrivalAirport);
+	}
+
 	
 	public String getDepartureAirport() {
-		return departureAirport;
+	    if (departureAirport != null) {
+	        return departureAirport;
+	    } else {
+	        return "";
+	    }
 	}
 	
 	public void setDepartureAirport(String departureAirport) {
@@ -21,8 +42,13 @@ public class Flight {
 	    }
 	}
 	
+	
 	public String getArrivalAirport() {
-		return arrivalAirport;
+	    if (arrivalAirport == null) {
+	        return "";
+	    } else {
+	        return arrivalAirport;
+	    }
 	}
 	
 	public void setArrivalAirport(String arrivalAirport) {
@@ -33,6 +59,7 @@ public class Flight {
 		}	
 	}
 	
+	/*
 	public void setStart(Date start) {
 		this.start = start;
 	}
@@ -49,6 +76,24 @@ public class Flight {
 		long milliseconds = end.getTime() - start.getTime();
 		long minutes = milliseconds / (60 * 1000);
 		return minutes + " minutes";
+	}
+	*/
+
+	@Override
+	public String getStart() {
+	    if (start != null) {
+	        return getDepartureAirport() + " " + start.toString();
+	    } else {
+	        return super.getStart();
+	    }
+	}
+	@Override
+	public String getEnd() {
+	    if (end != null) {
+	        return getArrivalAirport() + " " + end.toString();
+	    } else {
+	        return super.getEnd();
+	    }
 	}
 
 }
