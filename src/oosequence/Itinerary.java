@@ -5,12 +5,12 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Itinerary {
-	private ArrayList<Flight> flights;
+	private ArrayList<Flight> flightList;
 	private String name;
 
 	public Itinerary(String string) {
 		name = string;
-		flights = new ArrayList<>();
+		flightList = new ArrayList<>();
 	}
 
 	public String getName() {
@@ -18,20 +18,20 @@ public class Itinerary {
 	}
 
 	public void addFlight(Flight m) {
-		flights.add(m);
+		flightList.add(m);
 	    
-	    Collections.sort(flights, new Comparator<Flight>() {
+	    Collections.sort(flightList, new Comparator<Flight>() {
 	        public int compare(Flight f1, Flight f2) {
 	            return f1.getDeparture().compareTo(f2.getDeparture());
 	        }
 	    });
 	    
 	    int i = 0;
-	    while (i < flights.size() - 1) {
-	        Flight currentFlight = flights.get(i);
-	        Flight nextFlight = flights.get(i + 1);
+	    while (i < flightList.size() - 1) {
+	        Flight currentFlight = flightList.get(i);
+	        Flight nextFlight = flightList.get(i + 1);
 	        if (currentFlight.getArrival().after(nextFlight.getDeparture())) {
-	            flights.remove(i + 1);
+	        	flightList.remove(i + 1);
 	        } else {
 	            i++;
 	        }
@@ -39,18 +39,23 @@ public class Itinerary {
 	}
 
 	public ArrayList<Flight> getFlights() {
-		return flights;
+		return flightList;
 	}
 
 	public long getTotalLayover() {
 		long getTotalLayover = 0;
         
-        for (int i = 0; i < flights.size() - 1; i++) {
-            Flight waitTime = flights.get(i);
-            Flight nextFlight = flights.get(i + 1);
+        for (int i = 0; i < flightList.size() - 1; i++) {
+            Flight waitTime = flightList.get(i);
+            Flight nextFlight = flightList.get(i + 1);
             long layover = nextFlight.getDeparture().getTime() - waitTime.getArrival().getTime();
             getTotalLayover += layover / (60 * 1000); 
         }
         return getTotalLayover;
     }
+
+	public ArrayList<Flight> getFlightList() {
+		// TODO Auto-generated method stub
+		return new ArrayList<>(flightList);
+	}
 }

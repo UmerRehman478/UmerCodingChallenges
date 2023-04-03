@@ -11,6 +11,7 @@ public class Flight {
 	private Date departure;
 	private Date arrival;
 
+	
 	public Flight(Date departuredate, Date arrivaldate) {
 		if (departuredate == null || arrivaldate == null) {
 			departure = departuredate;
@@ -24,10 +25,19 @@ public class Flight {
 		}
 	}
 	
-
 	public Flight(Flight c) {
-		departure = c.departure;
-	    arrival = c.arrival;
+		if (c != null) {
+			Date otherDeparture = c.departure;
+			Date otherArrival = c.arrival;
+
+			if (otherDeparture != null) {
+				departure = new Date(otherDeparture.getTime());
+			}
+
+			if (otherArrival != null) {
+				arrival = new Date(otherArrival.getTime());
+			}
+		}
 	}
 
 	public long length() {
@@ -41,12 +51,19 @@ public class Flight {
 
 
 	public Date getDeparture() {
-		return departure;
+		if (departure != null) {
+			return new Date(departure.getTime());
+		} else {
+			return null;
+		}	
 	}
 
-
 	public Date getArrival() {
-		return arrival;
+		if (arrival != null) {
+			return new Date(arrival.getTime());
+		} else {
+			return null;
+		}	
 	}
 
 
