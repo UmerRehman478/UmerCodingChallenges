@@ -14,15 +14,23 @@ public class Flight {
 	
 	public Flight(Date departuredate, Date arrivaldate) {
 		if (departuredate == null || arrivaldate == null) {
-			departure = departuredate;
-			arrival = arrivaldate;
-		} else if (departuredate.before(arrivaldate)) {
-			departure = departuredate;
-			arrival = arrivaldate;
-		} else {
-			departure = null;
-			arrival = null;
-		}
+			if (departuredate == null && arrivaldate == null) {
+				departure = null;
+				arrival = null;
+			} else if (departuredate != null) {
+				departure = new Date(departuredate.getTime());
+				arrival = null;
+			} else {
+				departure = null;
+				arrival = new Date(arrivaldate.getTime());
+			}
+			} else if (departuredate.before(arrivaldate)) {
+				departure = new Date(departuredate.getTime());
+				arrival = new Date(arrivaldate.getTime());
+			} else {
+				departure = null;
+				arrival = null;
+			}
 	}
 	
 	public Flight(Flight c) {
