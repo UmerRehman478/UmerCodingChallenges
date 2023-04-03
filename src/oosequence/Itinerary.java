@@ -18,7 +18,8 @@ public class Itinerary {
 	}
 
 	public void addFlight(Flight m) {
-		flightList.add(m);
+	    Flight newFlight = new Flight(m);
+	    flightList.add(newFlight);
 	    
 	    Collections.sort(flightList, new Comparator<Flight>() {
 	        public int compare(Flight f1, Flight f2) {
