@@ -6,9 +6,6 @@ package application;
  */
 public class Grade {
 	//attributes/data
-	/**
-	 * numeric value of the grade
-	 */
 	double value;
 	/**
 	 * weight of grade
@@ -24,12 +21,30 @@ public class Grade {
 	 * @param gradeValue numeric value of grade
 	 * @param maxGradeValue the max grade value
 	 * @param weightTowardsCourseGrade the weight of the grade
+	 * @throws InvalidGradeException 
 	 */
 	//Constructor method
-	Grade(double gradeValue, int maxGradeValue, double weightTowardsCourseGrade){
-		value = gradeValue;
+	Grade(String gradeValue, int maxGradeValue, double weightTowardsCourseGrade) throws InvalidGradeException{
+		/*value = gradeValue;
 		maxValue = maxGradeValue;
-		weight = weightTowardsCourseGrade;
+		weight = weightTowardsCourseGrade;*/
+		
+	       try {
+	            value = Double.parseDouble(gradeValue);
+	        } catch (NumberFormatException e) {
+	            // If an error is detected in the conversion, throw an InvalidGradeException
+	            throw new InvalidGradeException("Grade should be a number. Invalid grade: " + gradeValue);
+	        }
+	        
+	        // Set the other instance variables
+	        maxValue = maxGradeValue;
+	        weight = weightTowardsCourseGrade;
+
+	        // Handle input validations
+	        if (value < 0 || value > maxValue) {
+	            throw new InvalidGradeException(String.format("Grade should be between 0 and %d. Invalid grade: %.02f", maxValue, value));
+	        }
+
 	}
 	
 	/**
@@ -47,7 +62,7 @@ public class Grade {
 	 * @return an error message if the user has a wrong input
 	 */
 	//actions	
-	String setValue(String valueAsString) {
+	/*String setValue(String valueAsString) {
 		String errorMessage = ""; // Start with assuming no error
 	
 	   	// Check that the user entered a numeric value
@@ -66,7 +81,7 @@ public class Grade {
     					". Grade should be a number. ";
     		}
     		}
-    	}
+    	}*/
     	
     	//ValidGrade
     	if (validGrade) {
