@@ -81,19 +81,12 @@ public class Flight extends TripComponent {
 
 	@Override
 	public String getStart() {
-	    if (start != null) {
-	        return getDepartureAirport() + " " + start.toString();
-	    } else {
-	        return super.getStart();
-	    }
+		return getDepartureAirport() + " " + start.toString();
 	}
+	
 	@Override
 	public String getEnd() {
-	    if (end != null) {
-	        return getArrivalAirport() + " " + end.toString();
-	    } else {
-	        return super.getEnd();
-	    }
+		return getArrivalAirport() + " " + end.toString();
 	}
 
 }

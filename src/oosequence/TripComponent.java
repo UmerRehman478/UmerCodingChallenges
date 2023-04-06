@@ -86,17 +86,28 @@ public class TripComponent{
     }
 
     public boolean overlapsWith(TripComponent other) {
-        if (other == null || start == null || end == null || other.start == null || other.end == null) {
-            return false;
-        } else {
-            return !(start.after(other.end) || end.before(other.start));
-        }
+    	if(start==null || end==null || other.start==null || other.end==null)
+    		return false;
+    	if(start.before(other.start) && end.after(other.start))
+    		return true;
+    	if(other.start.before(start) && other.end.after(start))
+    		return true;
+    	
+    	return false;
+    	/*if (!(start == null) && !(end == null) && !(other.start == null) && !(other.end == null)){
+    		return !(this.isBefore(other));
+    		}
+    	return false;*/
     }
 
-	public boolean isBefore(Object object) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public boolean isBefore(TripComponent other) {
+		return end.before(other.start);
+	    /*if (this.end.getTime() < other.start.getTime()) {
+	        return true;
+	    } else {
+	    return false;	
+	    }*/
+	    }
 	
 	public static int size() {
 		// TODO Auto-generated method stub
