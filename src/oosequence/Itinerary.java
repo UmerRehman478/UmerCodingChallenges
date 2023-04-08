@@ -50,6 +50,7 @@ public class Itinerary extends TripComponent{
 			}
 			//tripcomponents.add(aComponent);
 		}
+	}
 		/*if (flights.size() == 0) {
 			flights.add(h);
 			return;
@@ -71,7 +72,7 @@ public class Itinerary extends TripComponent{
 					flights.add(i+1, h);
 			}
 		}*/
-	}
+	
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
