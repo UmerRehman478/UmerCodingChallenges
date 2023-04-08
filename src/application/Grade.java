@@ -21,6 +21,7 @@ public class Grade {
 	 * @param gradeValue numeric value of grade
 	 * @param maxGradeValue the max grade value
 	 * @param weightTowardsCourseGrade the weight of the grade
+	 * 
 	 */
 	//Constructor method
 	Grade(String gradeValue, int maxGradeValue, double weightTowardsCourseGrade) throws InvalidGradeException{
@@ -43,9 +44,13 @@ public class Grade {
 	        if (value < 0 || value > maxValue) {
 	            throw new InvalidGradeException(String.format("Grade should be between 0 and %d. Invalid grade: %.02f", maxValue, value));
 	        }
+		
+
 
 	}
-	
+
+
+
 	/**
 	 * gets and calculates the weight percentage value of the grade
 	 * @return weighted percentage value 
@@ -81,7 +86,7 @@ public class Grade {
     					". Grade should be a number. ";
     		}
     		}
-    	}*/
+    	}
     	
     	//ValidGrade
     	if (validGrade) {
@@ -96,8 +101,9 @@ public class Grade {
     	} 
     	
     	return errorMessage;
-    
-	}
+    	
+	}*/
+ 
 	
 
 }
