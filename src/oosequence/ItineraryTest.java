@@ -158,7 +158,7 @@ public class ItineraryTest {
 		c.addTripComponent(m4);
 		c.addTripComponent(m5);
 		c.addTripComponent(m6);
-
+		
 		TripComponent overlapping = new TripComponent(getDate(2019,1,1,15,30), getDate(2019,1,1,20,00));
 		c.addTripComponent(overlapping);
 
@@ -173,6 +173,7 @@ public class ItineraryTest {
 		assertEquals("flight 6 test - testing start", "YYC " + getDate(2019,1,2,9,40), list.get(5).getStart());
 	}
 
+	
 	@Test
 	public void test_addTripComponent_addingReverseOrder() {
 		Itinerary c = new Itinerary("Test");

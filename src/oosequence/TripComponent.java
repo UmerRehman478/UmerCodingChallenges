@@ -94,28 +94,13 @@ public class TripComponent{
     		return true;
     	
     	return false;
-    	/*if (!(start == null) && !(end == null) && !(other.start == null) && !(other.end == null)){
-    		return !(this.isBefore(other));
-    		}
-    	return false;*/
+    	
     }
 
 	public boolean isBefore(TripComponent other) {
 		return end.before(other.start);
-	    /*if (this.end.getTime() < other.start.getTime()) {
-	        return true;
-	    } else {
-	    return false;	
-	    }*/
+	
 	    }
+
 	
-	public static int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	public static void add(TripComponent h) {
-		// TODO Auto-generated method stub
-		
-	}
 }
