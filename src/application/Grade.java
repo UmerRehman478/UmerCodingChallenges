@@ -21,7 +21,6 @@ public class Grade {
 	 * @param gradeValue numeric value of grade
 	 * @param maxGradeValue the max grade value
 	 * @param weightTowardsCourseGrade the weight of the grade
-	 * @throws InvalidGradeException 
 	 */
 	//Constructor method
 	Grade(String gradeValue, int maxGradeValue, double weightTowardsCourseGrade) throws InvalidGradeException{
@@ -55,6 +54,7 @@ public class Grade {
 	double getWeightedPercentageValue() {
 		return value * 100 * weight / maxValue;
 	}
+
 	
 	/**
 	 * method to set values and handle input validations
