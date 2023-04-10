@@ -32,17 +32,19 @@ public class Itinerary extends TripComponent{
 			boolean added=false;
 			boolean conflict=false;
 			//System.out.println("size" + tripcomponents.size());
-			for(int index = 0 ; index<tripcomponents.size() && !added && !conflict;index++) {
+			for(int index = 0 ; index<tripcomponents.size(); index++) {
 				TripComponent current = tripcomponents.get(index);
 				if(aComponent.overlapsWith(current)) {
 					conflict=true;
+					return;
 				}
 				else if(aComponent.isBefore(current)) {
 					tripcomponents.add(index,aComponent);
 					added=true;
+					return;
 				}
 			}
-			if(!added && !conflict) {
+			if(!added) {
 				tripcomponents.add(aComponent);
 			}
 		}

@@ -86,14 +86,16 @@ public class TripComponent{
     }
 
     public boolean overlapsWith(TripComponent other) {
+    	
     	if(start==null || end==null || other.start==null || other.end==null)
     		return false;
-    	if(start.before(other.start) && end.after(other.start))
-    		return true;
-    	if(other.start.before(start) && other.end.after(start))
-    		return true;
+    		return (!this.isBefore(other));
+    	//if(start.before(other.start) && end.after(other.start))
+    		//return true;
+    	//if(other.start.before(start) && other.end.after(start))
+    		//return true;
     	
-    	return false;
+    	//return false;
     	
     }
 
