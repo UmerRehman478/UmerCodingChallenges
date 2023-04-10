@@ -49,8 +49,6 @@ public class Grade {
 
 	}
 
-
-
 	/**
 	 * gets and calculates the weight percentage value of the grade
 	 * @return weighted percentage value 
