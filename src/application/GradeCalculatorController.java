@@ -56,19 +56,19 @@ public class GradeCalculatorController {
     	boolean noErrors = true;
     	double weightOfEachQuiz = 1.0/15;
     	for (TextField textfield : quizGradeTextfields) {
-    		Grade quizGrade = null;
+    		//Grade quizGrade;
 			try {
-				quizGrade = new Grade("0", 10, weightOfEachQuiz);
+				quizGrade = new Grade(0, 10, weightOfEachQuiz);
 			} catch (InvalidGradeException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				
 			} 
-    		//String errorMessage = quizGrade.setValue(textfield.getText());
-    		InvalidGradeException errorMessage = new InvalidGradeException("A");
+    		String errorMessage = quizGrade.setValue(textfield.getText());
+    		//InvalidGradeException errorMessage = new InvalidGradeException("A");
     		if (!errorMessage.equals("")) {
     			noErrors = false;
-    			//quizGradeErrorLabel.setText("errorMessage");
+    			quizGradeErrorLabel.setText(errorMessage);
     		}
         	averageQuizGrade += quizGrade.getWeightedPercentageValue();
     	}
