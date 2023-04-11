@@ -49,6 +49,13 @@ public class Grade {
 
 	}
 
+	public Grade(double d, int maxGradeValue, double weightTowardsCourseGrade) { 
+		// TODO Auto-generated constructor stub
+	    value = d;
+	    maxValue = maxGradeValue;
+	    weight = weightTowardsCourseGrade;
+	}
+
 	/**
 	 * gets and calculates the weight percentage value of the grade
 	 * @return weighted percentage value 

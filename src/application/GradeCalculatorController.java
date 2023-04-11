@@ -13,11 +13,11 @@ import javafx.stage.Stage;
 
 public class GradeCalculatorController {
 	Stage applicationStage;
-	double averageQuizGrade = 0.0;
-	double optionalaverageQuizGrade = 0.0;
+	String averageQuizGrade = "0";
+	String optionalaverageQuizGrade = "0";
 
     @FXML
-    private ChoiceBox<Integer> optionalCodingChallengesPassedChoiceBox;
+    private ChoiceBox<String> optionalCodingChallengesPassedChoiceBox;
 
     @FXML
     private ChoiceBox<Integer> quizzesChoiceBox;
@@ -35,7 +35,7 @@ public class GradeCalculatorController {
     private TextField projectGradeTextfield;
 
     @FXML
-    private ChoiceBox<Integer> codingChallengesPassedChoiceBox;
+    private ChoiceBox<String> codingChallengesPassedChoiceBox;
     
     @FXML
     private Label courseGradeLabel; 
@@ -52,26 +52,32 @@ public class GradeCalculatorController {
 
     void calculateQuizGrade(Scene mainScene, ArrayList<TextField> quizGradeTextfields) {
     	quizGradeErrorLabel.setText("");
-    	averageQuizGrade = 0.0;
+    	averageQuizGrade = "0";
     	boolean noErrors = true;
+    	String errorMessage = "";
     	double weightOfEachQuiz = 1.0/15;
     	for (TextField textfield : quizGradeTextfields) {
-    		//Grade quizGrade;
+    		//Grade quizGrade = new Grade(0, 10, weightOfEachQuiz);
 			try {
-				quizGrade = new Grade(0, 10, weightOfEachQuiz);
+				Grade quizGrade = new
+				Grade(textfield.getText(), 10, weightOfEachQuiz);
+	        	averageQuizGrade += quizGrade.getWeightedPercentageValue();
+
 			} catch (InvalidGradeException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//Grade quizGrade = new Grade(0, 10, weightOfEachQuiz);
+				errorMessage = e.getMessage();
+				//e.printStackTrace();
 				
-			} 
-    		String errorMessage = quizGrade.setValue(textfield.getText());
-    		//InvalidGradeException errorMessage = new InvalidGradeException("A");
+			}
+    		//String errorMessage = quizGrade.setValue(textfield.getText());
     		if (!errorMessage.equals("")) {
     			noErrors = false;
     			quizGradeErrorLabel.setText(errorMessage);
     		}
-        	averageQuizGrade += quizGrade.getWeightedPercentageValue();
+        	//averageQuizGrade += quizGrade.getWeightedPercentageValue();
     	}
+    	
     	if(noErrors) {
     	applicationStage.setScene(mainScene);
     	requiredQuizGrade.setText(String.format("Average: %.2f%%", averageQuizGrade));
@@ -115,7 +121,7 @@ public class GradeCalculatorController {
     
     void calculateoptionalQuizGrade(Scene mainScene, ArrayList<TextField> optionalquizTextFields) {
     	optquizGradeErrorLabel.setText("");
-    	optionalaverageQuizGrade = 0.0;
+    	optionalaverageQuizGrade = "0";
     	boolean noErrors = true;
     	double weightOfEachoptQuiz = 1.0/5;
     	
@@ -124,12 +130,21 @@ public class GradeCalculatorController {
     	int i = 0;
                 
         for (TextField textfield : optionalquizTextFields) {
-            Grade optionalquizGrade = new Grade(0, 10, weightOfEachoptQuiz); 
+            try {
+                Grade optquizGrade = new Grade(textfield.getText(), 10, weightOfEachoptQuiz);
+                optionalaverageQuizGrade += optquizGrade.getWeightedPercentageValue();
+            } catch (InvalidGradeException e) {
+                noErrors = false;
+                quizGradeErrorLabel.setText(e.getMessage());
+            }
+        
+        
+            /*Grade optionalquizGrade = new Grade(optionalquizTextFields.getText(), 10, weightOfEachoptQuiz); 
             String errorMessage = optionalquizGrade.setValue(textfield.getText());
             if (!errorMessage.equals("")) {
                 noErrors = false;
                 optquizGradeErrorLabel.setText(errorMessage);
-            } 
+            } */
             arrayTexts[i] = Double.parseDouble(textfield.getText());
             i++;            
         }
@@ -150,9 +165,10 @@ public class GradeCalculatorController {
             }
             
         	}
-            optionalaverageQuizGrade = optionalaverageQuizGrade / (5);
-            
-            optionalQuizGrade.setText(String.format("Average: %.2f%%", optionalaverageQuizGrade));
+            //optionalaverageQuizGrade = optionalaverageQuizGrade / (5);
+            optionalQuizGrade.setText(String.format("Average: %.2f%%", Double.parseDouble(optionalaverageQuizGrade) / 5));
+
+            //optionalQuizGrade.setText(String.format("Average: %.2f%%", optionalaverageQuizGrade));
             applicationStage.setScene(mainScene);
         }
         System.out.println(optionalaverageQuizGrade);
@@ -193,15 +209,23 @@ public class GradeCalculatorController {
      * Checks and calculates the overall course grade based on the project grade, quiz grade, 
      * coding challenges passed, and optional coding challenges passed.
      * @param event when the calculateGrade button is pressed a action occurs, which triggers the calculation of the course grade. 
+     * @throws InvalidGradeException 
      */
 
     @FXML
-    void calculateGrade(ActionEvent event) {
+    void calculateGrade(ActionEvent event) throws InvalidGradeException {
     	projectGradeErrorLabel.setText("");
     	double courseGrade = 0.0;
     	
-    	Grade projectGrade = new Grade(0, 100, .5);
-    	projectGradeErrorLabel.setText(projectGrade.setValue(projectGradeTextfield.getText()));
+    	Grade projectGrade = new Grade("0", 100, .5);
+    	
+    	try {
+    	     projectGrade = new Grade(projectGradeTextfield.getText(), 100, .5);
+    	} catch (InvalidGradeException e) {
+    		projectGradeErrorLabel.setText(e.getMessage());
+    	}
+    	//Grade projectGrade = new Grade(0, 100, .5);
+    	//projectGradeErrorLabel.setText(projectGrade.setValue(projectGradeTextfield.getText()));
     	
     	Grade quizGrade = new Grade(averageQuizGrade, 100, .1875);
     	
