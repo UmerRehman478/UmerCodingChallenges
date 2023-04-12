@@ -6,24 +6,61 @@ public class Flight extends TripComponent {
 
 	private String departureAirport;
 	private String arrivalAirport;
-	public Date start;
-	public Date end;
+	//public Date start;
+	//public Date end;
+
+
+	public Flight(Flight copy) {
+
+		super(copy);
+		departureAirport = copy.departureAirport;
+		arrivalAirport = copy.arrivalAirport;
+
+	}
 	
-	public Flight(Date date, Date date2, String string, String string2) {
+	private boolean validAirport(String airportCode) {
+		if (airportCode == null) {return false;}
+		if (airportCode.length() != 3) {return false;}
+		for (int i = 0; i<3; i++) {
+			if (!Character.isAlphabetic(airportCode.charAt(i))) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public Flight(Date departureTime, Date arrivalTime, String departAirport, String arriveAirport) {
+			super(departureTime,arrivalTime);
+
+			if(departAirport !=null && validAirport(departAirport)) {
+				departureAirport = departAirport;
+			}
+			else { departureAirport = "";}
+
+			if(arriveAirport !=null && validAirport(arriveAirport)) {
+				arrivalAirport = arriveAirport;
+			}
+			else { arrivalAirport = "";}
+
+
+	}
+	
+	/*public Flight(Date date, Date date2, String string, String string2) {
 		// TODO Auto-generated constructor stub
 		start = date;
 		end = date2;
 		setDepartureAirport(string);
         setArrivalAirport(string2);
-	}
+	}*/
 
-	public Flight(Flight c) {
+	/*public Flight(Flight c) {
 		// TODO Auto-generated constructor stub
 		start = c.start;
 		end = c.end;
 		setDepartureAirport(c.departureAirport);
         setArrivalAirport(c.arrivalAirport);
-	}
+	}*/
 
 	
 	public String getDepartureAirport() {
@@ -81,12 +118,12 @@ public class Flight extends TripComponent {
 
 	@Override
 	public String getStart() {
-		return getDepartureAirport() + " " + start.toString();
+		return getDepartureAirport() + " " + super.getStart();
 	}
 	
 	@Override
 	public String getEnd() {
-		return getArrivalAirport() + " " + end.toString();
+		return getArrivalAirport() + " " + super.getEnd();
 	}
 
 }
